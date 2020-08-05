@@ -23,7 +23,7 @@ public class GenerateJWT {
 		/*
 		 */
 		claims.put("sub", "5bfc155710c30e4ac8c8a502");
-		claims.put("qsh", zCon.getQsh("GET&/public/rest/api/1.0/cycles/search&projectId=16174&versionId=14937"));
+		claims.put("qsh", zCon.getQsh("GET&/public/rest/api/1.0/cycles/search&projectId=14800&versionId=14507"));
 		claims.put("iss", accessKey);
 		claims.put("iat", System.currentTimeMillis());
 		claims.put("exp", System.currentTimeMillis()+experation);

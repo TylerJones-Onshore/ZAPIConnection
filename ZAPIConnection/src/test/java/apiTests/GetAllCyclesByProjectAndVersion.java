@@ -3,6 +3,8 @@ package apiTests;
 import org.testng.annotations.Test;
 
 import zapi.Client;
+import zapiObjects.ProjectCycles;
+import zapiObjects.CycleList;
 
 public class GetAllCyclesByProjectAndVersion {
 	static Client c = new Client();
@@ -13,13 +15,21 @@ public class GetAllCyclesByProjectAndVersion {
 		String accId = "5bfc155710c30e4ac8c8a502";
 		String projectId = "16174";
 		String versionId = "14937";
-		
+		/*
+		String projectId = "14800";
+		String versionId= "14507";
+		*/
+		c.setAccountId(accId);
+		c.setExperation(2000);
 		c.setAccessKey(accessKey);
 		c.setSecretKey(secretKey);
 		c.contentType = "test/plain";
-		c.getCycleList(accId, projectId, versionId, 0);
-		
-		
+		CycleList list = c.getCycleList(projectId, versionId);
+		System.out.println("*****************\n\n\n");
+		for(ProjectCycles cycle: list.cycles) {
+			System.out.println(cycle.id);
+			System.out.println(cycle.name);
+		}
 		
 	}
 }
