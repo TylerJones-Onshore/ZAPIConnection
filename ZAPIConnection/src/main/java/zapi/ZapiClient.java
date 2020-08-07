@@ -154,11 +154,11 @@ public class ZapiClient {
 			System.arraycopy(partial.searchObjectList, 0, temp.searchObjectList, cycle.searchObjectList.length, partial.searchObjectList.length);
 			cycle.searchObjectList = temp.searchObjectList;
 		}
-		params[0] = (int)params[0]+cycle.maxAllowed;
+		params[0] = (Integer)params[0]+cycle.maxAllowed;
 		if(total<1) {
 			total = cycle.totalCount;			
 		}
-		}while((int)params[0]<total);
+		}while((Integer)params[0]<total);
 		
 		return cycle;
 	}

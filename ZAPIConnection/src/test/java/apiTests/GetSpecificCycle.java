@@ -24,7 +24,7 @@ public class GetSpecificCycle {
 		c.setAccessKey(accessKey);
 		c.setSecretKey(secretKey);
 		c.contentType = "test/plain";
-		CycleDetails cycle = c.getCycle(projectId, versionId, "7e292fb7-8d6d-438f-944e-f729583244fe");
+		CycleDetails cycle = c.getCycle(projectId, versionId, "3496cb42-fe5a-48bb-9dba-130465c80563");
 		System.out.println("*****************\n\n\n");
 		System.out.println(cycle.totalCount);
 		System.out.println(cycle.searchObjectList.length);
