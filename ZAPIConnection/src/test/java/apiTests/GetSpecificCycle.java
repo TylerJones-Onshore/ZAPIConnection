@@ -2,12 +2,12 @@ package apiTests;
 
 import org.testng.annotations.Test;
 
-import zapi.Client;
+import zapi.ZapiClient;
 import zapiObjects.CycleDetails;
 import zapiObjects.Execution;
 
 public class GetSpecificCycle {
-	static Client c = new Client();
+	static ZapiClient c = new ZapiClient();
 	@Test
 	public static void GetCycle() {
 		String accessKey = "ZjJlMThkNjktNzU5ZC0zNTgzLTkwYWMtNGY2Mzc5YzFlMjIyIDViZmMxNTU3MTBjMzBlNGFjOGM4YTUwMiBVU0VSX0RFRkFVTFRfTkFNRQ";

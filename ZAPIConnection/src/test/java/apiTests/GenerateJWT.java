@@ -7,10 +7,10 @@ import java.util.Map;
 
 import org.testng.annotations.Test;
 
-import zapi.Client;
+import zapi.ZapiClient;
 
 public class GenerateJWT {
-	Client zCon = new Client();
+	ZapiClient zCon = new ZapiClient();
 	Map<String,Object> claims = new HashMap<String,Object>();
 	
 	@Test
@@ -23,7 +23,7 @@ public class GenerateJWT {
 		/*
 		 */
 		claims.put("sub", "5bfc155710c30e4ac8c8a502");
-		claims.put("qsh", zCon.getQsh("GET&/public/rest/api/1.0/cycles/search&projectId=14800&versionId=14507"));
+		claims.put("qsh", zCon.getQsh("POST&/public/rest/api/1.0/executions/add/cycle/44534520-177e-431a-9e2a-c1d50034293b&"));
 		claims.put("iss", accessKey);
 		claims.put("iat", System.currentTimeMillis());
 		claims.put("exp", System.currentTimeMillis()+experation);

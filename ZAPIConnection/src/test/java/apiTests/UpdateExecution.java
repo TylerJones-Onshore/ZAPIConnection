@@ -3,12 +3,12 @@ package apiTests;
 import org.testng.annotations.Test;
 
 import jiraObjects.Issue;
-import zapi.Client;
+import zapi.ZapiClient;
 import zapiObjects.ExecutionDetails;
 import zapiObjects.ExecutionStatus;
 
 public class UpdateExecution {
-	Client c = new Client();
+	ZapiClient c = new ZapiClient();
 	@Test
 	public void updateExecution() {
 		String accessKey = "ZjJlMThkNjktNzU5ZC0zNTgzLTkwYWMtNGY2Mzc5YzFlMjIyIDViZmMxNTU3MTBjMzBlNGFjOGM4YTUwMiBVU0VSX0RFRkFVTFRfTkFNRQ";

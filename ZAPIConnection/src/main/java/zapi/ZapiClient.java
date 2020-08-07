@@ -2,6 +2,7 @@ package zapi;
 
 import static io.restassured.RestAssured.given;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.MessageDigest;
@@ -23,7 +24,7 @@ import zapiObjects.CycleList;
 import zapiObjects.Execution;
 import zapiObjects.ExecutionDetails;
 
-public class Client {
+public class ZapiClient {
 	private final String baseUri = "https://prod-api.zephyr4jiracloud.com";
 	private final String contextPath = "/connect";
 	private String zAccessKey;
@@ -45,6 +46,66 @@ public class Client {
 	}
 	public void setSecretKey(String key) {
 		zSecretKey = key;
+	}
+	public void addTestToCycle(String cycleId,String projectId,String versionId,String[] tests) throws Exception {
+		String relativePath = "/public/rest/api/1.0/executions/add/cycle/"+cycleId;
+		///public/rest/api/1.0/executions/add/cycle/44534520-177e-431a-9e2a-c1d50034293b
+		String cannonicalPath = "POST&"+relativePath+"&";
+		
+		claims.clear();
+		claims.put("sub", accId);
+		claims.put("qsh", getQsh(cannonicalPath));
+		claims.put("iss", zAccessKey);
+		claims.put("iat", System.currentTimeMillis());
+		claims.put("exp", System.currentTimeMillis()+experation);
+		String jwt = getJwt(claims,zSecretKey);
+		
+		headers.clear();
+		headers.put("Authorization", "JWT "+jwt);
+		headers.put("zapiAccessKey",zAccessKey);
+		headers.put("Content-Type", "application/json");
+		
+		String json = "{\"versionId\":\""+versionId+"\",\"projectId\":\""+projectId+"\",\"method\":\"1\",\"issues\":[";
+		for(int i = 0; i < tests.length; i ++) {
+			if(i>0) {
+				json+=",";
+			}
+			json+="\""+tests[i]+"\"";
+		}
+		json+="]}";
+		
+		Response r = post(baseUri+contextPath+relativePath,json);
+		
+		if(!(r.getStatusCode()>=200&&r.getStatusCode()<300)) {
+			throw new Exception("Failed to add tests to cycle "+cycleId);
+		}
+		
+		
+	}
+	
+	public ProjectCycles createCycle(String name, String versionId, String projectId) {
+		
+		String relativePath = "/public/rest/api/1.0/cycle";
+		String cannonicalPath = "POST&"+relativePath+"&";
+		
+		claims.clear();
+		claims.put("sub", accId);
+		claims.put("qsh", getQsh(cannonicalPath));
+		claims.put("iss", zAccessKey);
+		claims.put("iat", System.currentTimeMillis());
+		claims.put("exp", System.currentTimeMillis()+experation);
+		String jwt = getJwt(claims,zSecretKey);
+		
+		headers.clear();
+		headers.put("Authorization", "JWT "+jwt);
+		headers.put("zapiAccessKey",zAccessKey);
+		headers.put("Content-Type", "application/json");
+		
+		String json = "{\"name\":\""+name+"\",\"versionId\":\""+versionId+"\",\"projectId\":\""+projectId+"\"}";
+		
+		Response r = post(baseUri+contextPath+relativePath,json);
+		
+		return g.fromJson(r.then().log().all().extract().asString(),ProjectCycles.class);
 	}
 	
 	public CycleDetails getCycle(String projectId, String versionId, String cycleId) {
@@ -146,6 +207,9 @@ public class Client {
 		headers.put("zapiAccessKey",zAccessKey);
 		String jsonBody = update.getUpdateJson();
 		Response r = put(contextPath+relativePath,jsonBody);
+		if(!(200<=r.statusCode()&&r.statusCode()<300)) {
+			System.out.println("Failed to updated ticket status!");
+		}
 		return (200<=r.statusCode()&&r.statusCode()<300);
 	}
 	
@@ -172,6 +236,29 @@ public class Client {
 		return request.when().body(body).put(resource);
 	}
 	
+	private Response post(String resource, File body) {
+		RequestSpecification request = given().baseUri(baseUri);
+		if(contentType != null&&!contentType.contentEquals("")) {
+			request = request.contentType(contentType);
+		}
+		if(headers != null && headers.size()>0) {
+			request = request.headers(headers);
+		}
+		request.log().all();
+		return request.when().multiPart(body).post(resource).andReturn();
+	}
+	
+	private Response post(String resource, Object body) {
+		RequestSpecification request = given().baseUri(baseUri);
+		if(contentType != null&&!contentType.contentEquals("")) {
+			request = request.contentType(contentType);
+		}
+		if(headers != null && headers.size()>0) {
+			request = request.headers(headers);
+		}
+		request.log().all();
+		return request.when().body(body).post(resource).andReturn();
+	}
 	public String getQsh(String qstring) {
 		String qsh = "";
 		try {
