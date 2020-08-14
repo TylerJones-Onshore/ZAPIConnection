@@ -79,8 +79,6 @@ public class ZapiClient {
 		if(!(r.getStatusCode()>=200&&r.getStatusCode()<300)) {
 			throw new Exception("Failed to add tests to cycle "+cycleId);
 		}
-		
-		
 	}
 	
 	public ProjectCycles createCycle(String name, String versionId, String projectId) {

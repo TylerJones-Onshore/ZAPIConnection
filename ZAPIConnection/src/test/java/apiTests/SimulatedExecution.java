@@ -81,7 +81,7 @@ public class SimulatedExecution {
 			if(status.equals("Fail")) {
 				createdTicket = reportBug(testResultKey+" execution failure.",errorMessage,p);
 			}
-
+			
 			for(Version v:p.versions) {
 				if(v.name.equals(tests.get(testResultKey))) {
 					targetVersionId = v.id;
@@ -95,11 +95,13 @@ public class SimulatedExecution {
 		    	createdCycles.put(targetVersionId, zapi.createCycle(date, targetVersionId, p.id));
 		    }
 		    targetCycle = createdCycles.get(targetVersionId);
+		    
 			try {
 				zapi.addTestToCycle(targetCycle.id, p.id, targetVersionId, new String[] {testResultKey});
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 			CycleDetails cycleDetails = zapi.getCycle(p.id, targetVersionId, targetCycle.id);
 			Execution execution = null;
 			for(Execution e:cycleDetails.searchObjectList) {
@@ -108,6 +110,7 @@ public class SimulatedExecution {
 					break;
 				}
 			}
+			
 			if(execution != null) {
 				execution.execution.status = new ExecutionStatus();
 				execution.execution.status.id = ExecutionStatusEnum.getStatusCode(testsResults.get(testResultKey));
@@ -117,7 +120,10 @@ public class SimulatedExecution {
 				}
 				else if(createdTicket != null && execution.execution.defects.length>0) {
 					Issue[] temp = new Issue[execution.execution.defects.length+1];
-					temp[execution.execution.defects.length-1] = createdTicket;
+					for(int i = 0; i < execution.execution.defects.length;i++) {
+						temp[i] = execution.execution.defects[i];
+					}
+					temp[execution.execution.defects.length] = createdTicket;
 					execution.execution.defects = temp;
 				}
 				zapi.updateExecution(execution.execution.id, execution.execution);
