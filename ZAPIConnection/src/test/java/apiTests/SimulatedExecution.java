@@ -27,7 +27,7 @@ import zapiObjects.ExecutionStatusEnum;
 import zapiObjects.ProjectCycles;
 
 public class SimulatedExecution {
-	Client jira = new Client("tjones@aarp.org","0yw8ZD5F9Xn7p2gVAF8pC588");
+	Client jira = new Client("jiraUsername","jiraAPIKey");
 	ZapiClient zapi = new ZapiClient();
 
 	@Test
