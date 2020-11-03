@@ -13,11 +13,12 @@ public class CreateCycle {
 	
 	@Test
 	public void createCycle() {
-		String accessKey = "ZjJlMThkNjktNzU5ZC0zNTgzLTkwYWMtNGY2Mzc5YzFlMjIyIDViZmMxNTU3MTBjMzBlNGFjOGM4YTUwMiBVU0VSX0RFRkFVTFRfTkFNRQ";
-		String secretKey = "v7NJjgHp5FSRzNtVmswcXGyIxXjUmefFydKPTqkHVqQ";
+		String accessKey = "accessKey";
+		String secretKey = "secretKey";
+		String accId = "jiraAccountId";
 
 		Zapi.setAccessKey(accessKey);
-		Zapi.setAccountId("5bfc155710c30e4ac8c8a502");
+		Zapi.setAccountId(accId);
 		Zapi.setSecretKey(secretKey);
 		
 	    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
