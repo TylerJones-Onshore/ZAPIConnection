@@ -32,11 +32,11 @@ public class SimulatedExecution {
 
 	@Test
 	public void executionExample() {
-		String accessKey = "ZjJlMThkNjktNzU5ZC0zNTgzLTkwYWMtNGY2Mzc5YzFlMjIyIDViZmMxNTU3MTBjMzBlNGFjOGM4YTUwMiBVU0VSX0RFRkFVTFRfTkFNRQ";
-		String secretKey = "v7NJjgHp5FSRzNtVmswcXGyIxXjUmefFydKPTqkHVqQ";
-		String accId = "5bfc155710c30e4ac8c8a502";
+		String accessKey = "accessKey";
+		String secretKey = "secretKey";
+		String accId = "jiraAccountId";
 		
-		jira.baseUri = "https://aarpqmo.atlassian.net";
+		jira.baseUri = "https://yourCompany.atlassian.net";
 		jira.contentType = "application/json";
 		zapi.setAccessKey(accessKey);
 		zapi.setSecretKey(secretKey);
