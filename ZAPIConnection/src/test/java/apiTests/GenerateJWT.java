@@ -29,7 +29,6 @@ public class GenerateJWT {
 		claims.put("iat", System.currentTimeMillis());
 		claims.put("exp", System.currentTimeMillis()+experation);
 		String jwt = zCon.getJwt(claims, secretKey);
-		//String jwt = zCon.createJWT(accessKey, "5bfc155710c30e4ac8c8a502", 3500, secretKey);
 		System.out.println(claims.get("qsh"));
 		System.out.println(jwt);
 	}
