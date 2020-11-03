@@ -15,14 +15,15 @@ public class GenerateJWT {
 	
 	@Test
 	public void TestingQSHandJWT() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		String accessKey = "ZjJlMThkNjktNzU5ZC0zNTgzLTkwYWMtNGY2Mzc5YzFlMjIyIDViZmMxNTU3MTBjMzBlNGFjOGM4YTUwMiBVU0VSX0RFRkFVTFRfTkFNRQ";
-		String secretKey = "v7NJjgHp5FSRzNtVmswcXGyIxXjUmefFydKPTqkHVqQ";
+		String accessKey = "accessKey";
+		String secretKey = "secretKey";
+		String accId = "jiraAccountId";
 		long experation = 35000;
 		
 		
 		/*
 		 */
-		claims.put("sub", "5bfc155710c30e4ac8c8a502");
+		claims.put("sub", accId);
 		claims.put("qsh", zCon.getQsh("POST&/public/rest/api/1.0/executions/add/cycle/44534520-177e-431a-9e2a-c1d50034293b&"));
 		claims.put("iss", accessKey);
 		claims.put("iat", System.currentTimeMillis());
